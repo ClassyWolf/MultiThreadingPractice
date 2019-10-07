@@ -4,10 +4,28 @@ using UnityEngine;
 using Unity.Mathematics;
 using Unity.Jobs;
 using Unity.Collections;
+using Unity.Burst;
 
 public class testing : MonoBehaviour
 {
     [SerializeField] private bool useJobs;
+    [SerializeField] private Transform objects;
+    private List<Objects> objectList;
+
+    public class Objects
+    {
+        public Transform transform;
+        public float moveY;
+    }
+
+    private void Start()
+    {
+        objectList = new List<Objects>();
+        for (int i = 0; i < 1000; i++)
+        {
+
+        }
+    }
 
     private void Update()
     {
@@ -51,6 +69,7 @@ public class testing : MonoBehaviour
     }
 }
 
+[BurstCompile]
 public struct ExampleThoughJob : IJob
 {
     //Extra fields added here
@@ -63,5 +82,13 @@ public struct ExampleThoughJob : IJob
         {
             value = math.exp10(math.sqrt(value));
         }
+    }
+}
+
+public struct ExampleThoughList : IJobParallelFor
+{
+    void IJobParallelFor.Execute(int index)
+    {
+        
     }
 }
